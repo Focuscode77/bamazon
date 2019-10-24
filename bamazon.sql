@@ -12,54 +12,37 @@ CREATE TABLE products (
   PRIMARY KEY (id)
 );
 
--- SELECT * FROM top5000;
+  SELECT * FROM products;
 
 INSERT INTO products (product_name,department_name,price,stock_quantity)
 VALUES ("Essentia","Grocery department",5,75);
 
 INSERT INTO products (product_name,department_name,price,stock_quantity)
-VALUES ("Keyboard","Tech department",80,100);
+VALUES (" Mac Keyboard","Tech department",155,100);
 
 INSERT INTO products (product_name,department_name,price,stock_quantity)
-VALUES ("Polo Ralph LAUREN BODY SPRAY","Mens department",50,30);
+VALUES ("Polo Ralph Lauren Body Spray","Mens department",50,30);
 
+INSERT INTO products (product_name,department_name,price,stock_quantity)
+VALUES ("Eye Glasses","Warby Parker",105,75);
 
+INSERT INTO products (product_name,department_name,price,stock_quantity)
+VALUES ("Ice Cream", "Grocery department",5,23);
 
+INSERT INTO products (product_name,department_name,price,stock_quantity)
+VALUES ("Fan", "Electronic department",20,55);
 
+INSERT INTO products (product_name,department_name,price,stock_quantity)
+VALUES ("Pen","School department",2,202);
 
+INSERT INTO products (product_name,department_name,price,stock_quantity)
+VALUES ("Grill","Outside department",40,75);
 
-item_id (unique id for each product)
-product_name (Name of product)
-department_name
-price (cost to customer)
-stock_quantity (how much of the product is available in stores)
+INSERT INTO products (product_name,department_name,price,stock_quantity)
+VALUES ("Desktop table", "Tech department",25,9);
 
-
-
-Populate this database with around 10 different products. (i.e. Insert "mock" data rows into this database and table).
-Then create a Node application called bamazonCustomer.js. Running this application will first display all of the items available for sale. Include the ids, names, and prices of products for sale.
-The app should then prompt users with two messages.
-
-
-
-The first should ask them the ID of the product they would like to buy.
-The second message should ask how many units of the product they would like to buy.
-
-
-
-Once the customer has placed the order, your application should check if your store has enough of the product to meet the customer's request.
-
-
-
-If not, the app should log a phrase like Insufficient quantity!, and then prevent the order from going through.
-
-
-
-However, if your store does have enough of the product, you should fulfill the customer's order.
-
-
-This means updating the SQL database to reflect the remaining quantity.
-Once the update goes through, show the customer the total cost of their purchase.
+INSERT INTO products (product_name,department_name,price,stock_quantity)
+VALUES ("Nike Gym Bag","Athletic department", 15,44);
 
 
 
@@ -67,6 +50,7 @@ Once the update goes through, show the customer the total cost of their purchase
 
 
 
-If this activity took you between 8-10 hours, then you've put enough time into this assignment. Feel free to stop here -- unless you want to take on the next challenge.
+
+
 
 
