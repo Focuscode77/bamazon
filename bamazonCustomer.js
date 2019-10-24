@@ -18,7 +18,7 @@ var connection = mysql.createConnection({
 connection.connect(function (err) {
     if (err) throw err;
     console.log("connected as id " + connection.threadId + "\n")
-runSearch();
+    runSearch();
 
 });
 
@@ -54,25 +54,28 @@ function runSearch() {
                     break;
 
                 case "Find something in grocery department":
-                    //   function goes here
+                    grocerySearch();
                     break;
 
                 case "Find something in Mens department":
-                    // function goes here
+                    menSearch();
                     break;
 
                 case "Find something in Warby Parker":
-                    //   function goes here
+                    warbySearch();
                     break;
                 case "Find something in Electronic department":
-                    //   function goes here
+                    ElectronicSearch();
                     break;
                 case "Find something in School department":
+                    // function goes here
                     break;
                 case "Find something in Athletic department":
+                    // function goes here
                     break;
-                 case "Find something in Outside department":
-                     break;
+                case "Find something in Outside department":
+                    // function goes here
+                    break;
 
             }
         });
@@ -93,38 +96,112 @@ function departmentProducts() {
 // Finds everthing in tech department
 function techSearch() {
     inquirer
-      .prompt({
-        name: "products",
-        type: "input",
-        message: "How many would you like to buy?"
-      })
-      .then(function(answer) {
-        var query = "SELECT product_name, stock_quantity FROM products WHERE ?";
-        connection.query(query, { product_name: answer.stock_quantity }, function(err, res) {
-          for (var i = 0; i < res.length; i++) {
-            console.log("Product: " + res[i].product_name + " || Stock: " + res[i].stock_quantity);
-          }
-          runSearch();
-        });
-      });
-  }
-// The second message should ask how many units of the product they would like to buy.
+        .prompt({
+            name: "products",
+            type: "input",
+            message: "How many would you like to buy?",
+           
+        }).then(function(answer) {
+            // when finished prompting, insert a new item into the db with that info
+            console.log("Selecting all items avialable for tech...\n");
+          connection.query("SELECT * FROM products WHERE department_name ='Tech department'", function (err, res) {
+        if (err) throw err;
+        // Log all results of the SELECT statement
+        console.log(res);
+        connection.end();
+    });
+        })
 
 
+};
 
-// Once the customer has placed the order, your application should check if your store has enough of the product to meet the customer's request.
+// Finds everything in grocery
+function grocerySearch() {
+    inquirer
+        .prompt({
+            name: "products",
+            type: "input",
+            message: "How many would you like to buy?",
+           
+        }).then(function(answer) {
+            // when finished prompting, insert a new item into the db with that info
+            console.log("Selecting all items avialable for grocery department...\n");
+          connection.query("SELECT * FROM products WHERE department_name ='Grocery department'", function (err, res) {
+        if (err) throw err;
+        // Log all results of the SELECT statement
+        console.log(res);
+        connection.end();
+    });
+        })
 
 
+};
 
-// If not, the app should log a phrase like Insufficient quantity! , and then prevent the order from going through.
+// Finds everything in the mens department
+function menSearch() {
+    inquirer
+        .prompt({
+            name: "products",
+            type: "input",
+            message: "How many would you like to buy?",
+           
+        }).then(function(answer) {
+            // when finished prompting, insert a new item into the db with that info
+            console.log("Selecting all items avialable in mens department...\n");
+          connection.query("SELECT * FROM products WHERE department_name ='Mens department'", function (err, res) {
+        if (err) throw err;
+        // Log all results of the SELECT statement
+        console.log(res);
+        connection.end();
+    });
+        })
 
 
+};
 
-//     However, if your store does have enough of the product, you should fulfill the customer's order.
+
+// Finds everything in Warby parker
+function warbySearch() {
+    inquirer
+        .prompt({
+            name: "products",
+            type: "input",
+            message: "How many would you like to buy?",
+           
+        }).then(function(answer) {
+            // when finished prompting, insert a new item into the db with that info
+            console.log("Selecting all items avialable in Warby...\n");
+          connection.query("SELECT * FROM products WHERE department_name ='Warby Parker'", function (err, res) {
+        if (err) throw err;
+        // Log all results of the SELECT statement
+        console.log(res);
+        connection.end();
+    });
+        })
 
 
-// This means updating the SQL database to reflect the remaining quantity.
-// Once the update goes through, show the customer the total cost of their purchase.
+};
+// Electronic 
+function ElectronicSearch() {
+    inquirer
+        .prompt({
+            name: "products",
+            type: "input",
+            message: "How many would you like to buy?",
+           
+        }).then(function(answer) {
+            // when finished prompting, insert a new item into the db with that info
+            console.log("Selecting all items avialable in Electronic...\n");
+          connection.query("SELECT * FROM products WHERE department_name ='Electronic department'", function (err, res) {
+        if (err) throw err;
+        // Log all results of the SELECT statement
+        console.log(res);
+        connection.end();
+    });
+        })
+
+
+};
 
 
 
