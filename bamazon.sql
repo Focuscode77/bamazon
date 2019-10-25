@@ -30,7 +30,7 @@ INSERT INTO products (product_name,department_name,price,stock_quantity)
 VALUES ("Ice Cream", "Grocery department",5,23);
 
 INSERT INTO products (product_name,department_name,price,stock_quantity)
-VALUES ("Fan", "Electronic department",20,55);
+VALUES ("Fan", "Tech department",20,55);
 
 INSERT INTO products (product_name,department_name,price,stock_quantity)
 VALUES ("Pen","School department",2,202);

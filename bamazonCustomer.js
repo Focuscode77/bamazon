@@ -65,16 +65,16 @@ function runSearch() {
                     warbySearch();
                     break;
                 case "Find something in Electronic department":
-                    ElectronicSearch();
+                    techSearch();
                     break;
                 case "Find something in School department":
-                    // function goes here
+                    schoolSearch();
                     break;
                 case "Find something in Athletic department":
-                    // function goes here
+                    athleticSearch();
                     break;
                 case "Find something in Outside department":
-                    // function goes here
+                    outsideSearch();
                     break;
 
             }
@@ -181,8 +181,10 @@ function warbySearch() {
 
 
 };
-// Electronic 
-function ElectronicSearch() {
+
+// Finding something Athletiics
+
+function athleticSearch() {
     inquirer
         .prompt({
             name: "products",
@@ -191,8 +193,8 @@ function ElectronicSearch() {
            
         }).then(function(answer) {
             // when finished prompting, insert a new item into the db with that info
-            console.log("Selecting all items avialable in Electronic...\n");
-          connection.query("SELECT * FROM products WHERE department_name ='Electronic department'", function (err, res) {
+            console.log("Selecting all items avialable in Athletic department...\n");
+          connection.query("SELECT * FROM products WHERE department_name ='Athletic department'", function (err, res) {
         if (err) throw err;
         // Log all results of the SELECT statement
         console.log(res);
@@ -200,8 +202,51 @@ function ElectronicSearch() {
     });
         })
 
+};
+
+// Find something in the School 
+
+function schoolSearch() {
+    inquirer
+        .prompt({
+            name: "products",
+            type: "input",
+            message: "How many would you like to buy?",
+           
+        }).then(function(answer) {
+            // when finished prompting, insert a new item into the db with that info
+            console.log("Selecting all items avialable in Athletic department...\n");
+          connection.query("SELECT * FROM products WHERE department_name ='School department'", function (err, res) {
+        if (err) throw err;
+        // Log all results of the SELECT statement
+        console.log(res);
+        connection.end();
+    });
+        })
 
 };
+
+// Find something in Outside
+function outsideSearch() {
+    inquirer
+        .prompt({
+            name: "products",
+            type: "input",
+            message: "How many would you like to buy?",
+           
+        }).then(function(answer) {
+            // when finished prompting, insert a new item into the db with that info
+            console.log("Selecting all items avialable in outside department...\n");
+          connection.query("SELECT * FROM products WHERE department_name ='Outside department'", function (err, res) {
+        if (err) throw err;
+        // Log all results of the SELECT statement
+        console.log(res);
+        connection.end();
+    });
+        })
+
+};
+
 
 
 
