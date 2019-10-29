@@ -18,240 +18,110 @@ var connection = mysql.createConnection({
 connection.connect(function (err) {
     if (err) throw err;
     console.log("connected as id " + connection.threadId + "\n")
-    runSearch();
+    // Run functions to start program!
+    displayProducts();
+    setTimeout(shop, 3000);
 
 });
 
 
-// Starts inquirer to ask the user questions
+// Displays all products within store for customer
 
-function runSearch() {
-    inquirer
-        .prompt({
-            name: "action",
-            type: "rawlist",
-            message: "What would you like to buy?",
-            choices: [
-                "Find something in our tech department",
-                "Find everything in the store",
-                "Find something in grocery department",
-                "Find something in Mens department",
-                "Find something in Warby Parker",
-                "Find something in Electronic department",
-                "Find something in School department",
-                "Find something in Athletic department",
-                "Find somethinf in Outside department"
-            ]
-        })
-        .then(function (answer) {
-            switch (answer.action) {
-                case "Find everything in the store":
-                    departmentProducts();
-                    break;
+function displayProducts() {
+    connection.query("SELECT * FROM products", function(err,res){
+        console.log("------------------------------");
+        console.log("ID | Product | Price");
+        console.log("-----------------------------");
+        for(var i = 0; i < res.length; i++){
+        console.log(res[i].item_id + "|" + res[i].product_name + "|" + res[i].price);
+        console.log("------------------------");
 
-                case "Find something in our tech department":
-                    techSearch();
-                    break;
+        }
 
-                case "Find something in grocery department":
-                    grocerySearch();
-                    break;
-
-                case "Find something in Mens department":
-                    menSearch();
-                    break;
-
-                case "Find something in Warby Parker":
-                    warbySearch();
-                    break;
-                case "Find something in Electronic department":
-                    techSearch();
-                    break;
-                case "Find something in School department":
-                    schoolSearch();
-                    break;
-                case "Find something in Athletic department":
-                    athleticSearch();
-                    break;
-                case "Find something in Outside department":
-                    outsideSearch();
-                    break;
-
-            }
-        });
+    })
+   
 }
 
 // Seraches all products
-function departmentProducts() {
-    console.log("Selecting all items avialable for sale...\n");
-    connection.query("SELECT  product_name FROM products", function (err, res) {
-        if (err) throw err;
-        // Log all results of the SELECT statement
-        console.log(res);
-        connection.end();
-    });
-}
+
 
 
 // Finds everthing in tech department
-function techSearch() {
-    inquirer
-        .prompt({
-            name: "products",
-            type: "input",
-            message: "How many would you like to buy?",
-           
-        }).then(function(answer) {
-            // when finished prompting, insert a new item into the db with that info
-            console.log("Selecting all items avialable for tech...\n");
-          connection.query("SELECT * FROM products WHERE department_name ='Tech department'", function (err, res) {
-        if (err) throw err;
+function shop() {
+    connection.query("SELECT * FROM products ", function (err, res) {
         // Log all results of the SELECT statement
-        console.log(res);
-        connection.end();
-    });
-        })
+        inquirer
+        .prompt([
+            {
 
+            name: "choice",
+            type: "list",
+            choices: function(){
+                var choiceArray= [];
+                for(var i = 0 ; i < res.length; i++){
+                choiceArray.push(res[i].item_id.toString());
+
+                }
+                return choiceArray;
+
+            },
+            message: "Based on the product id which one would you like?"
+        }, 
+        {
+            name: "quantity",
+            type: "list",
+            choices:["1","2","3","4","5"],
+            message: "How many would you like to purchase?"
+
+        }   
+        
+        ]).then( function(answer){
+         var chosenItem;
+         for(var i = 0; i < res.length; i++){
+          if(res[i].item_id === parseInt(answer.choice)){
+             chosenItem = res[i];
+
+          }
+
+         }
+
+         var totalPaid = chosenItem.price * answer.quantity;
+
+         if(chosenItem.stock_quantity >= parseInt(answer.quantity)){
+          connection.query(
+              "Update products Set ? Where ?",
+              [
+                 {
+                    stock_quantity: chosenItem.stock_quantity - answer.quantity
+
+                 },
+                 {
+                   item_id: chosenItem.item_id
+
+                 }
+
+              ],
+              function(error){
+                  if(error) throw err;
+                  console.log("Purchase succesful! Your purchase came to a total of $" + totalPaid)
+            //    function reset
+              setTimeout(displayProducts, 3000);
+              setTimeout(shop, 5000);
+
+              }
+          )
+
+         }
+        else{
+           console.log("we dont have enough avialable in stock please try agian!")
+            // Function reset
+           setTimeout(displayProducts, 3000);
+              setTimeout(shop, 5000);
+        }
+
+
+        });
+    });
 
 };
-
-// Finds everything in grocery
-function grocerySearch() {
-    inquirer
-        .prompt({
-            name: "products",
-            type: "input",
-            message: "How many would you like to buy?",
-           
-        }).then(function(answer) {
-            // when finished prompting, insert a new item into the db with that info
-            console.log("Selecting all items avialable for grocery department...\n");
-          connection.query("SELECT * FROM products WHERE department_name ='Grocery department'", function (err, res) {
-        if (err) throw err;
-        // Log all results of the SELECT statement
-        console.log(res);
-        connection.end();
-    });
-        })
-
-
-};
-
-// Finds everything in the mens department
-function menSearch() {
-    inquirer
-        .prompt({
-            name: "products",
-            type: "input",
-            message: "How many would you like to buy?",
-           
-        }).then(function(answer) {
-            // when finished prompting, insert a new item into the db with that info
-            console.log("Selecting all items avialable in mens department...\n");
-          connection.query("SELECT * FROM products WHERE department_name ='Mens department'", function (err, res) {
-        if (err) throw err;
-        // Log all results of the SELECT statement
-        console.log(res);
-        connection.end();
-    });
-        })
-
-
-};
-
-
-// Finds everything in Warby parker
-function warbySearch() {
-    inquirer
-        .prompt({
-            name: "products",
-            type: "input",
-            message: "How many would you like to buy?",
-           
-        }).then(function(answer) {
-            // when finished prompting, insert a new item into the db with that info
-            console.log("Selecting all items avialable in Warby...\n");
-          connection.query("SELECT * FROM products WHERE department_name ='Warby Parker'", function (err, res) {
-        if (err) throw err;
-        // Log all results of the SELECT statement
-        console.log(res);
-        connection.end();
-    });
-        })
-
-
-};
-
-// Finding something Athletiics
-
-function athleticSearch() {
-    inquirer
-        .prompt({
-            name: "products",
-            type: "input",
-            message: "How many would you like to buy?",
-           
-        }).then(function(answer) {
-            // when finished prompting, insert a new item into the db with that info
-            console.log("Selecting all items avialable in Athletic department...\n");
-          connection.query("SELECT * FROM products WHERE department_name ='Athletic department'", function (err, res) {
-        if (err) throw err;
-        // Log all results of the SELECT statement
-        console.log(res);
-        connection.end();
-    });
-        })
-
-};
-
-// Find something in the School 
-
-function schoolSearch() {
-    inquirer
-        .prompt({
-            name: "products",
-            type: "input",
-            message: "How many would you like to buy?",
-           
-        }).then(function(answer) {
-            // when finished prompting, insert a new item into the db with that info
-            console.log("Selecting all items avialable in Athletic department...\n");
-          connection.query("SELECT * FROM products WHERE department_name ='School department'", function (err, res) {
-        if (err) throw err;
-        // Log all results of the SELECT statement
-        console.log(res);
-        connection.end();
-    });
-        })
-
-};
-
-// Find something in Outside
-function outsideSearch() {
-    inquirer
-        .prompt({
-            name: "products",
-            type: "input",
-            message: "How many would you like to buy?",
-           
-        }).then(function(answer) {
-            // when finished prompting, insert a new item into the db with that info
-            console.log("Selecting all items avialable in outside department...\n");
-          connection.query("SELECT * FROM products WHERE department_name ='Outside department'", function (err, res) {
-        if (err) throw err;
-        // Log all results of the SELECT statement
-        console.log(res);
-        connection.end();
-    });
-        })
-
-};
-
-
-
-
-
-
-
-
 
