@@ -1,0 +1,80 @@
+Bamazon coding process
+ Mysql
+ Create a database in seeds file
+ create a data base , create a table with rows (Make sure your ID Auto increments), 10 rows)
+
+ Test Code in Mysql workbench!
+
+
+
+ Javascript/node process
+ * (Require) needed npm packages mysql,inquirer,
+
+ * Create mysql connection. inside create (port,host,user,password and database)
+
+ intiate mysql connection
+ within start functions to start program
+
+
+
+ Create a display function
+  query through id , products and price from mysql
+
+  console.log comments to make it look nice and neat
+
+
+
+  Create shop function
+  function that will ask the user to choose a product based on the id of that product.
+
+  Another prompt will then ask the user how many of that product it would like to buy.
+
+  If the product available the user will recieve a total if not the user will recieve a insifficant amount and be sent back to the shop function
+
+
+
+  LOGIC Javascript:
+
+  Display function
+  use connect.query element to Select into products table.
+  create a function that has and err and res condition.
+  Create a for loop to loop through the response of the query
+
+  * The id, product name and price*
+
+
+  Shop function
+  Use conntection query element to Select into products table
+  create a prompt with and emtpy arry to push into
+  create a for loop
+
+
+  create another prompt that ask how many items the user would like to choose from arry of choices.
+
+  .then reponse
+
+ * for loop of the answers chosen form the prompt
+
+ create a variable that gives back the total * answer quanity
+
+
+ create a condition that only gives the user the quanity amount it is in stock
+
+ maybe an if statement
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
